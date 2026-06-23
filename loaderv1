@@ -1,11 +1,8 @@
--- Game-detection loader (LinoriaLib)
--- Arsenal  -> closes the loader, then runs the Arsenal script
--- MM2      -> runs the MM2 script (loader stays open)
+
 
 local repo = 'https://raw.githubusercontent.com/violin-suzutsuki/LinoriaLib/main/'
 local Library = loadstring(game:HttpGet(repo .. 'Library.lua'))()
 
--- PlaceId -> action
 local GAMES = {
     [286090429] = { -- Arsenal
         name = 'Arsenal',
@@ -32,18 +29,14 @@ local Window = Library:CreateWindow({
 local Tab = Window:AddTab('Main')
 local Box = Tab:AddLeftGroupbox('Script')
 
--- the jnkie script key
 local keyValue = 'KEYLESS'
 
 local function runScript(target)
-    -- jnkie requires the key in the global env BEFORE the script runs
     getgenv().script_key = keyValue
     getgenv().SCRIPT_KEY = keyValue
-    -- close the loader first if requested
     if target.close then
         Library:Unload()
     end
-    -- run the game's script
     local ok, err = pcall(function()
         loadstring(game:HttpGet(target.url))()
     end)
